@@ -1,0 +1,19 @@
+{
+  "name": "abovesky/think-utils",
+  "description": "基于thinkphp5.1的公共类库composer扩展",
+  "authors": [
+    {
+      "name": "tianshaofeng",
+      "email": "abovesky@qq.com"
+    }
+  ],
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Utils\\": "src"
+    }
+  },
+  "require": {
+    "php": ">=7.1.0"
+  }
+}
