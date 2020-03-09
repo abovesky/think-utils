@@ -1,9 +1,9 @@
 <?php
 
-namespace Utils;
+namespace abovesky\utils;
 
 use think\facade\Config;
-use Utils\exception\FileException;
+use abovesky\utils\exception\FileException;
 
 abstract class File
 {
@@ -28,7 +28,7 @@ abstract class File
      * @param array $config
      * @throws FileException
      */
-    public function __construct($files,$config=[])
+    public function __construct($files, $config = [])
     {
         //是否传入数据
         $this->files = $files;
@@ -65,10 +65,9 @@ abstract class File
      */
     protected function verify()
     {
-        if(!$this->files)
-        {
+        if (!$this->files) {
             throw new FileException([
-                'msg' =>'未找到符合条件的文件资源',
+                'msg' => '未找到符合条件的文件资源',
             ]);
         }
         $this->allowdFile();
@@ -101,27 +100,21 @@ abstract class File
      */
     protected function allowdFile()
     {
-        if((!empty($this->includes) && !empty($this->exclude)) || !empty($this->includes))
-        {
-            foreach($this->files as $v)
-            {
+        if ((!empty($this->includes) && !empty($this->exclude)) || !empty($this->includes)) {
+            foreach ($this->files as $v) {
                 $fileName = $v->getInfo()['name'];
-                if(!strpos($fileName,'.') || !in_array(substr($fileName,strripos($fileName,".")+1),$this->includes))
-                {
+                if (!strpos($fileName, '.') || !in_array(substr($fileName, strripos($fileName, ".") + 1), $this->includes)) {
                     throw new FileException([
-                        'msg' =>'文件扩展名不合法',
+                        'msg' => '文件扩展名不合法',
                     ]);
                 }
             }
-        }else if(!empty($this->excludes) && empty($this->includes))
-        {
-            foreach($this->files as $v)
-            {
+        } else if (!empty($this->excludes) && empty($this->includes)) {
+            foreach ($this->files as $v) {
                 $fileName = $v->getInfo()['name'];
-                if(!strpos($fileName,'.') || in_array(substr($fileName,strripos($fileName,".")+1),$this->excludes))
-                {
+                if (!strpos($fileName, '.') || in_array(substr($fileName, strripos($fileName, ".") + 1), $this->excludes)) {
                     throw new FileException([
-                        'msg' =>'文件扩展名不合法',
+                        'msg' => '文件扩展名不合法',
                     ]);
                 }
             }
@@ -135,28 +128,24 @@ abstract class File
     protected function allowedFileSize()
     {
         $fileCount = count($this->files);
-        if($fileCount > $this->nums)
-        {
+        if ($fileCount > $this->nums) {
             throw new FileException([
-                'msg' =>'文件数量过多',
+                'msg' => '文件数量过多',
             ]);
         }
         $totalSize = 0;
-        foreach($this->files as$k => $file)
-        {
+        foreach ($this->files as $k => $file) {
             $fileSize = $this->getSize($this->files[$k]);
-            if($fileSize > $this->singleLimit)
-            {
+            if ($fileSize > $this->singleLimit) {
                 throw new FileException([
-                    'msg' =>'文件体积过大',
+                    'msg' => '文件体积过大',
                 ]);
             }
             $totalSize += $fileSize;
         }
-        if($totalSize > $this->totalLimit)
-        {
+        if ($totalSize > $this->totalLimit) {
             throw new FileException([
-                'msg' =>'文件体积过大',
+                'msg' => '文件体积过大',
             ]);
         }
     }

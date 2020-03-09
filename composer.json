@@ -3,14 +3,14 @@
   "description": "基于thinkphp5.1的公共类库composer扩展",
   "authors": [
     {
-      "name": "tianshaofeng",
+      "name": "abovesky",
       "email": "abovesky@qq.com"
     }
   ],
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "Utils\\": "src"
+      "abovesky\\utils\\": "src"
     }
   },
   "require": {
